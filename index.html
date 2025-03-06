@@ -7,76 +7,127 @@
   </head>
   <body>
     <style>
-      /* Configuração básica */
+      /* Updated background with pattern and animation */
       body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      margin: 0;
-      padding: 20px;
-      min-height: 100vh;
-      background: #f5f5f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f5f5f5;
+        background-image: 
+          repeating-linear-gradient(
+            45deg,
+            rgba(0, 0, 0, 0.05) 0px,
+            rgba(0, 0, 0, 0.05) 2px,
+            transparent 2px,
+            transparent 5px
+          ),
+          linear-gradient(
+            135deg,
+            #f9f9f9 0%,
+            #e6e6e6 100%
+          );
+        animation: gradientShift 20s ease infinite;
       }
-      /* Container do vCard */
+
+      /* Container animation */
       [itemtype="http://schema.org/ContactPage"] {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 30px;
-      max-width: 400px;
-      width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 12px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        max-width: 400px;
+        width: 100%;
+        backdrop-filter: blur(8px);
+        animation: fadeInUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+        transform: translateY(20px);
+        opacity: 0;
       }
-      /* Título principal */
-      h2[itemprop="name"] {
-      color: #2c3e50;
-      margin-bottom: 15px;
-      font-size: 1.8em;
-      text-align: center;
+
+      /* Animations */
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
-      /* Detalhes de contato */
-      [itemprop="contactPoint"] {
-      margin-top: 20px;
+
+      @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
       }
-      /* Campos de informação */
-      p {
-      margin: 12px 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+
+      /* Item animations */
+      [itemprop="contactPoint"] p {
+        opacity: 0;
+        transform: translateX(-20px);
+        animation: itemSlideIn 0.6s ease forwards;
       }
-      /* Ícones e labels */
-      span[itemprop]::before {
-      content: attr(data-icon);
-      margin-right: 8px;
-      color: #3498db;
+
+      @keyframes itemSlideIn {
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
       }
-      /* Links de email */
+
+      /* Stagger animations */
+      [itemprop="contactPoint"] p:nth-child(1) { animation-delay: 0.3s; }
+      [itemprop="contactPoint"] p:nth-child(2) { animation-delay: 0.5s; }
+      [itemprop="contactPoint"] p:nth-child(3) { animation-delay: 0.7s; }
+      [itemprop="contactPoint"] p:nth-child(4) { animation-delay: 0.9s; }
+
+      /* Hover effects */
       a[itemprop="email"] {
-      color: #2ecc71;
-      text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
       }
+
       a[itemprop="email"]:hover {
-      text-decoration: underline;
+        transform: translateY(-2px);
+        color: #27ae60 !important;
       }
-      /* Telefone */
+
       [itemprop="telephone"] {
-      color: #e74c3c;
-      font-weight: bold;
+        transition: all 0.3s ease;
+        display: inline-block;
       }
-      /* Endereço */
-      [itemprop="address"] {
-      margin-top: 15px;
-      padding-top: 15px;
-      border-top: 1px solid #eee;
+
+      [itemprop="telephone"]:hover {
+        transform: translateX(5px);
+        color: #c0392b !important;
       }
-      /* Responsividade */
+
+      /* Rest of your existing styles... */
+      h2[itemprop="name"] {
+        color: #2c3e50;
+        margin-bottom: 15px;
+        font-size: 1.8em;
+        text-align: center;
+        animation: textGlow 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes textGlow {
+        from { text-shadow: 0 0 10px rgba(44, 62, 80, 0.1); }
+        to { text-shadow: 0 0 20px rgba(44, 62, 80, 0.2); }
+      }
+
+      /* Responsive adjustments */
       @media (max-width: 480px) {
-      [itemtype="http://schema.org/ContactPage"] {
-      padding: 20px;
-      font-size: 0.9em;
-      }
+        body {
+          padding: 10px;
+          background-size: 200% 200%;
+        }
+        
+        [itemtype="http://schema.org/ContactPage"] {
+          padding: 20px;
+          margin: 10px;
+        }
       }
     </style>
     <!-- Template para o vCard -->
